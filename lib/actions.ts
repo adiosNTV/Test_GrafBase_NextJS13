@@ -7,7 +7,7 @@ const apiUrl = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_URL
     || '' : 'http://127.0.0.1:4000/graphql'
 
 const apiKey = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_KEY
-    || '' : '1234567890'
+    || '' : 'letmein'
 
 const serverUrl = isProduction ? process.env.NEXT_PUBLIC_SERVER_URL
     : 'http://localhost:3000'
@@ -31,9 +31,11 @@ export const getUser = async (email: string) => {
 export const createUser = async (name: string, email : string, avatarUrl : string) => {
     client.setHeader('x-api-key', apiKey);
     const variables = {
-        name,
-        email,
-        avatarUrl,
+        input: {
+            name: name,
+            email: email,
+            avatarUrl: avatarUrl
+          },
     };
 
     return makeGraphQLRequest(createUserMutation, variables);

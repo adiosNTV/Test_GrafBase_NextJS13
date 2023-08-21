@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
         })
     ],
     jwt: {
-        encode: ({ secret, token }) => {
+        encode: async ({ secret, token }) => {
             const encodedToken = jsonwebtoken.sign(
                 {
                     ...token,
@@ -25,11 +25,13 @@ export const authOptions: NextAuthOptions = {
                 },
                 secret
             );
+            console.log("Encoded token: ", encodedToken);
             return encodedToken;
         },
         decode: async ({ secret, token }) => {
-            const decodedToken = jsonwebtoken.verify(token!, secret) as JWT;
-            return decodedToken;
+            const decodedToken = jsonwebtoken.verify(token!, secret);
+            console.log("Decoded token: ", decodedToken);
+            return decodedToken as JWT;
         }
     },
     theme: {
