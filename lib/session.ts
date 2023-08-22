@@ -25,12 +25,10 @@ export const authOptions: NextAuthOptions = {
                 },
                 secret
             );
-            console.log("Encoded token: ", encodedToken);
             return encodedToken;
         },
         decode: async ({ secret, token }) => {
             const decodedToken = jsonwebtoken.verify(token!, secret);
-            console.log("Decoded token: ", decodedToken);
             return decodedToken as JWT;
         }
     },
@@ -78,6 +76,5 @@ export const authOptions: NextAuthOptions = {
 
 export async function getCurrentUser() {
     const session = await getServerSession(authOptions) as SessionInterface;
-    console.log(session);
     return session;
 }
